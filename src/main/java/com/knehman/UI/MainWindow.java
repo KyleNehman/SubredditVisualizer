@@ -7,21 +7,21 @@ public class MainWindow extends JFrame {
 
     private JPanel panel;
 
-    public MainWindow(String title, int xSize, int ySize) {
+    public MainWindow(String title) {
         int[] screenCenter = getScreenCenter();
         this.panel = new JPanel();
 
-        int xLoc = screenCenter[0] - (xSize / 2);
-        int yLoc = screenCenter[1] - (ySize / 2);
-
         setTitle(title);
-        setLocation(xLoc, yLoc);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         initElements();
-        setResizable(false);
         setContentPane(panel);
         pack();
+
+        int halfWidth = getWidth() / 2;
+        int halfHeight = getHeight() / 2;
+        setLocation(screenCenter[0] - halfWidth, screenCenter[1] - halfHeight);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void initElements() {

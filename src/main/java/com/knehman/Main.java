@@ -22,8 +22,6 @@ public class Main {
 
         projectName = properties.getString("projectName");
 
-        int windowWidth = properties.getInt("windowWidth");
-        int windowHeight = properties.getInt("windowHeight");
-        window = new MainWindow(projectName, windowWidth, windowHeight);
+        window = new MainWindow(projectName);
     }
 }
