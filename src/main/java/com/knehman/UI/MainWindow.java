@@ -1,7 +1,11 @@
 package com.knehman.UI;
 
+import com.knehman.Utils.JsonDownloader;
+
 import javax.swing.*;
 import java.awt.*;
+
+import com.google.gson.*;
 
 public class MainWindow extends JFrame {
 
@@ -44,7 +48,14 @@ public class MainWindow extends JFrame {
 
         // Component Listeners
         toggleButton.addActionListener(e -> toggleLabel.setVisible(!toggleLabel.isVisible()));
-        subredditField.addActionListener(e -> System.out.println(subredditField.getText()));
+        subredditField.addActionListener(e -> {
+            String text = subredditField.getText();
+
+            JsonDownloader downloader = new JsonDownloader(text);
+            JsonObject json = downloader.getJson();
+
+            System.out.println("Scraped JSON: \n" + json.toString());
+        });
 
 
         // Layout groupings / add components

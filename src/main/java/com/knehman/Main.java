@@ -5,7 +5,8 @@ import com.knehman.Utils.*;
 
 public class Main {
 
-    private static String projectName = "<project name>";
+    public static String projectName = "<project name>";
+    public static String projectVersion = "<project version>";
     private static ConfigProperties properties = null;
     private static MainWindow window = null;
 
@@ -21,6 +22,7 @@ public class Main {
         ConfigProperties properties = config.getProperties();
 
         projectName = properties.getString("projectName");
+        projectVersion = properties.getString("projectVersion");
 
         window = new MainWindow(projectName);
     }
