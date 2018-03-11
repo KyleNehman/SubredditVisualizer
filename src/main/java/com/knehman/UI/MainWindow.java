@@ -50,13 +50,11 @@ public class MainWindow extends JFrame {
         toggleButton.addActionListener(e -> toggleLabel.setVisible(!toggleLabel.isVisible()));
         subredditField.addActionListener(e -> {
             String text = subredditField.getText();
-            String url = "http://www.reddit.com/r/" + text + ".json";
 
-            JsonDownloader downloader = new JsonDownloader(url);
-            System.err.println(url);
+            JsonDownloader downloader = new JsonDownloader(text);
             JsonObject json = downloader.getJson();
 
-            //System.out.println(json.toString());
+            System.out.println("Scraped JSON: \n" + json.toString());
         });
 
 

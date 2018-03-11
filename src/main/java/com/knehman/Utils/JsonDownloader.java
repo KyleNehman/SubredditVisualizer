@@ -1,43 +1,48 @@
 package com.knehman.Utils;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.net.URL;
 
 import com.google.gson.*;
+import com.knehman.Main;
 
 public class JsonDownloader {
 
     private JsonObject json;
 
-    public JsonDownloader(String urlString) {
+    public JsonDownloader(String subredditString) {
         try {
 
-            URL url = new URL(urlString);
+            URL url = new URL("https", "www.reddit.com", "/r/" + subredditString + ".json");
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
             request.setRequestMethod("GET");
+            request.setRequestProperty("User-Agent",  Main.projectName + ":" + Main.projectVersion +
+                    " (by KyleNehman)");
+
+
             request.setRequestProperty("Accept", "application/json");
             request.connect();
-
-            System.out.println("Len: " + request.getContentLength());
 
             InputStreamReader contextStream = new InputStreamReader(request.getInputStream());
             JsonParser parser = new JsonParser();
 
-            JsonElement ele = parser.parse(contextStream);
-            System.out.println(ele.toString());
-            //this.json = ele.getAsJsonObject();
+            this.json = parser.parse(contextStream).getAsJsonObject();
 
         } catch (IOException e) {
+            // Awful way to handle exceptions, but it'll be updated following testing
             e.printStackTrace();
         }
     }
 
     public JsonObject getJson() {
          return this.json;
+    }
+
+    private static void printHeaders(HttpURLConnection request) {
+
+        for (String h : request.getHeaderFields().keySet()) {
+            System.out.println("\t\"" + h + "\": \"" + request.getHeaderField(h) + "\"");
+        }
     }
 }
